@@ -1,0 +1,832 @@
+#bewerberboerse-app {
+    min-height: 100vh;
+    background-color: #f9fafb;
+    font-family: system-ui, -apple-system, sans-serif;
+    display: flex !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+}
+
+body .entry-content #bewerberboerse-app,
+body .wp-block-post-content #bewerberboerse-app,
+#bewerberboerse-app {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+}
+
+.bewerberboerse-sidebar {
+    width: 280px !important;
+    min-width: 280px !important;
+    max-width: 280px !important;
+    background: white;
+    padding: 24px;
+    border-right: 1px solid #e5e7eb;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+.bewerberboerse-sidebar h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    color: #111827;
+}
+
+.filter-group {
+    margin-bottom: 24px;
+}
+
+.filter-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #374151;
+}
+
+.filter-group input[type="text"],
+.filter-group input[type="number"],
+.filter-group input[type="search"],
+.filter-group select {
+    width: 100%;
+    max-width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.bewerberboerse-filter-checkboxes {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.bewerberboerse-filter-checkboxes label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 4px 0;
+}
+
+.bewerberboerse-filter-checkboxes input[type="checkbox"] {
+    width: auto;
+    cursor: pointer;
+}
+
+.bewerberboerse-content {
+    flex: 1;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.bewerberboerse-search-bar {
+    background: white;
+    padding: 16px 24px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.bewerberboerse-search-bar input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.bewerberboerse-search-btn {
+    padding: 12px 24px;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.bewerberboerse-results {
+    background: white;
+    flex: 1;
+    overflow-y: auto;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0;
+}
+
+.bewerberboerse-card {
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    cursor: pointer;
+}
+
+.bewerberboerse-card-content {
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 16px;
+    font-size: 14px;
+}
+
+.bewerberboerse-card-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.bewerberboerse-card-position {
+    font-weight: 600;
+    color: #2563eb;
+    margin-bottom: 4px;
+}
+
+.bewerberboerse-card-experience {
+    color: #374151;
+}
+
+.bewerberboerse-card-experience-title {
+    font-weight: 500;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.bewerberboerse-card-experience-empty {
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+.bewerberboerse-card-education {
+    color: #374151;
+}
+
+.bewerberboerse-card-education-title {
+    font-weight: 500;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.bewerberboerse-card-education-empty {
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+.bewerberboerse-card-location {
+    color: #374151;
+}
+
+.bewerberboerse-card-location-title {
+    font-weight: 500;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.bewerberboerse-card-radius {
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+.bewerberboerse-card-index {
+    text-align: right;
+    color: #9ca3af;
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.bewerberboerse-load-more-container {
+    padding: 32px;
+    text-align: center;
+    border-top: 1px solid #e5e7eb;
+}
+
+.bewerberboerse-load-more {
+    padding: 12px 24px;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+
+
+.bewerberboerse-no-results {
+    padding: 32px;
+    text-align: center;
+    color: #6b7280;
+}
+
+.error {
+    padding: 16px;
+    background: #fef2f2;
+    color: #dc2626;
+    border-radius: 8px;
+    margin: 16px;
+}
+
+.bewerberboerse-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    overflow-y: auto;
+}
+
+.bewerberboerse-modal-content {
+    position: relative;
+    background: white;
+    margin: 50px auto;
+    max-width: 800px;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.bewerberboerse-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #6b7280;
+    cursor: pointer;
+    line-height: 1;
+}
+
+
+
+.bewerberboerse-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.bewerberboerse-modal-header h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.bewerberboerse-modal-date {
+    font-size: 14px;
+    color: #6b7280;
+    font-weight: 500;
+    margin-right: 20px;
+}
+
+.bewerberboerse-modal-body {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.bewerberboerse-modal-section {
+    margin-bottom: 24px;
+}
+
+.bewerberboerse-modal-section h3 {
+    margin: 0 0 16px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.bewerberboerse-modal-field {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.bewerberboerse-modal-field:last-child {
+    border-bottom: none;
+}
+
+.bewerberboerse-modal-field-label {
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.bewerberboerse-modal-field-value {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.bewerberboerse-modal-field-item {
+    margin-bottom: 4px;
+    padding: 4px 0;
+}
+
+.bewerberboerse-modal-field-json {
+    background: #f9fafb;
+    padding: 12px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    white-space: pre-wrap;
+    overflow-x: auto;
+}
+
+.bewerberboerse-modal-field-array-item {
+    padding: 10px 16px;
+    background: #f3f4f6;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    color: #374151;
+    font-weight: 500;
+    position: relative;
+    padding-left: 36px;
+}
+
+.bewerberboerse-modal-field-array-item::before {
+    content: '•';
+    position: absolute;
+    left: 16px;
+    font-size: 20px;
+    color: #6b7280;
+}
+
+.bewerberboerse-modal-field-array-index {
+    font-weight: 600;
+    color: #3b82f6;
+    margin-right: 8px;
+    min-width: 20px;
+}
+
+.bewerberboerse-modal-field-array-content {
+    flex: 1;
+}
+
+.bewerberboerse-modal-field-subfield {
+    margin-bottom: 4px;
+    font-size: 13px;
+}
+
+.bewerberboerse-modal-field-subkey {
+    font-weight: 600;
+    color: #374151;
+}
+
+.bewerberboerse-modal-field-subvalue {
+    color: #6b7280;
+}
+
+.bewerberboerse-modal-field-simple {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.bewerberboerse-modal-field-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.bewerberboerse-modal-field-icon {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.bewerberboerse-modal-field-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.bewerberboerse-modal-field-content {
+    margin-left: 20px;
+    font-size: 14px;
+    color: #374151;
+}
+
+.bewerberboerse-modal-field-array {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.bewerberboerse-modal-field-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.bewerberboerse-modal-field-skill {
+    background: #dbeafe;
+    color: #1e40af;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.bewerberboerse-modal-field-object {
+    background: #f9fafb;
+    padding: 12px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.bewerberboerse-modal-field-object-item {
+    font-size: 13px;
+}
+
+.bewerberboerse-modal-field-object-item strong {
+    color: #374151;
+}
+
+.bewerberboerse-modal-experience-education {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+}
+
+.bewerberboerse-modal-ex-ed-left,
+.bewerberboerse-modal-ex-ed-right {
+    display: flex;
+    flex-direction: column;
+}
+
+.bewerberboerse-modal-ex-ed-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 16px;
+}
+
+.bewerberboerse-modal-ex-ed-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.bewerberboerse-modal-ex-ed-item {
+    border-left: 2px solid #e5e7eb;
+    padding-left: 16px;
+}
+
+.bewerberboerse-modal-ex-ed-position {
+    font-weight: 600;
+    color: #111827;
+    font-size: 15px;
+}
+
+.bewerberboerse-modal-ex-ed-company {
+    color: #6b7280;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.bewerberboerse-modal-ex-ed-dates {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: 4px;
+}
+
+.bewerberboerse-modal-ex-ed-current {
+    color: #2563eb;
+    font-weight: 500;
+}
+
+.bewerberboerse-modal-show-more {
+    color: #2563eb;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 8px 0;
+    text-align: left;
+    margin-top: 8px;
+}
+
+.bewerberboerse-modal-position-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.bewerberboerse-modal-position-value {
+    font-size: 16px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.bewerberboerse-modal-availability {
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+.bewerberboerse-modal-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.bewerberboerse-modal-info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.bewerberboerse-modal-info-icon {
+    font-size: 16px;
+    color: #6b7280;
+}
+
+.bewerberboerse-modal-info-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.bewerberboerse-modal-info-value {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.bewerberboerse-modal-radius {
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+@media (max-width: 1024px) {
+    .bewerberboerse-sidebar {
+        width: 250px !important;
+        min-width: 250px !important;
+        max-width: 250px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    #bewerberboerse-app {
+        flex-direction: column;
+    }
+
+    .bewerberboerse-sidebar {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+    }
+}
+
+.bewerberboerse-modal-languages-driving {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.bewerberboerse-modal-languages-driving-item {
+    padding: 8px 16px;
+    background: #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.bewerberboerse-modal-languages-driving-item:last-child {
+    border-bottom: none;
+}
+
+.bewerberboerse-modal-languages-driving-name {
+    font-size: 14px;
+    color: #374151;
+    font-weight: 600;
+}
+
+.bewerberboerse-modal-languages-driving-level {
+    color: #6b7280;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.bewerberboerse-modal-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.bewerberboerse-modal-skill-badge {
+    background: #e5e7eb;
+    color: #374151;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.bewerberboerse-modal-contact-section {
+    border-top: 2px solid #e5e7eb;
+    padding-top: 24px;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.bewerberboerse-modal-contact-btn {
+    padding: 14px 32px;
+    background: #374151;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bewerberboerse-modal-hash {
+    font-size: 14px;
+    color: #6b7280;
+    font-weight: 500;
+    font-family: 'Courier New', monospace;
+    background: #f9fafb;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+#bewerberboerse-contact-modal .bewerberboerse-modal-content {
+    max-width: 1000px;
+}
+
+.bewerberboerse-contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+}
+
+.bewerberboerse-contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.bewerberboerse-contact-info h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
+
+.bewerberboerse-contact-info p {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+}
+
+.bewerberboerse-contact-hash-display {
+    background: #f9fafb;
+    padding: 16px;
+    border-radius: 8px;
+    border: 2px solid #e5e7eb;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: #2563eb;
+}
+
+.bewerberboerse-contact-hash-display strong {
+    display: block;
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    font-family: inherit;
+    font-weight: 600;
+}
+
+.bewerberboerse-contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.bewerberboerse-contact-form h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
+
+.bewerberboerse-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.bewerberboerse-form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.bewerberboerse-form-group input,
+.bewerberboerse-form-group textarea {
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.2s ease;
+}
+
+.bewerberboerse-form-group input:focus,
+.bewerberboerse-form-group textarea:focus {
+    outline: none;
+    border-color: #6b7280;
+    box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1);
+}
+
+.bewerberboerse-form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.bewerberboerse-submit-btn {
+    padding: 14px 24px;
+    background: #374151;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bewerberboerse-checkbox-group {
+    margin-top: 8px;
+}
+
+.bewerberboerse-checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    padding: 8px 0;
+}
+
+.bewerberboerse-checkbox-label input[type="checkbox"] {
+    margin-top: 2px;
+    width: auto !important;
+    cursor: pointer;
+}
+
+.bewerberboerse-checkbox-label-text {
+    font-size: 14px;
+    color: #374151;
+    line-height: 1.5;
+}
+
+.bewerberboerse-checkbox-label-text .required {
+    color: #ef4444;
+}
+
+@media (max-width: 768px) {
+    .bewerberboerse-contact-content {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
