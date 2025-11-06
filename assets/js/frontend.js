@@ -624,15 +624,80 @@
                         'id', 'hash', 'user_id', 'template_id', 'created_at', 'updated_at', 'is_active', 'isActive', 'createdAt', 'updatedAt',
                         'berufserfahrung', 'bildung', 'work_experience', 'education',
                         'position', 'desired_position', 'professions', 'wordpress_application_id',
-                        'verfuegbarkeit', 'verügbarkeit', 'verfügbarkeit', 'availableFrom', 'arbeitszeit', 'workType', 'ort', 'location', 'radius'
+                        'verfuegbarkeit', 'verügbarkeit', 'verfügbarkeit', 'availableFrom', 'arbeitszeit', 'workType', 'ort', 'location', 'radius',
+                        'filled_data'
                     ];
                     
-                    const dynamicFields = Object.keys(allData).filter(key =>
-                        !excludedKeys.includes(key) &&
-                        allData[key] !== null &&
-                        allData[key] !== undefined &&
-                        allData[key] !== ''
-                    );
+                    const templateFieldNames = templateFields.map(field => {
+                        if (typeof field === 'object' && field !== null) {
+                            return field.name || field.field_id || field.id;
+                        }
+                        return field;
+                    }).filter(name => name);
+                    
+                    const dynamicFields = Object.keys(allData).filter(key => {
+                        if (excludedKeys.includes(key)) {
+                            return false;
+                        }
+                        
+                        const fieldInTemplate = templateFieldNames.some(templateFieldName => {
+                            if (typeof templateFieldName === 'string') {
+                                return key.toLowerCase() === templateFieldName.toLowerCase() ||
+                                       key.toLowerCase().replace(/ü/g, 'ue').replace(/ö/g, 'oe').replace(/ä/g, 'ae') === templateFieldName.toLowerCase() ||
+                                       key.toLowerCase().replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ä/g, 'a') === templateFieldName.toLowerCase();
+                            }
+                            return false;
+                        });
+                        
+                        if (!fieldInTemplate) {
+                            return false;
+                        }
+                        
+                        const value = allData[key];
+                        if (value === null || value === undefined || value === '') {
+                            return false;
+                        }
+                        
+                        if (Array.isArray(value) && value.length === 0) {
+                            return false;
+                        }
+                        
+                        if (Array.isArray(value)) {
+                            const hasNonEmpty = value.some(item => {
+                                if (item === null || item === '' || item === false || item === undefined) {
+                                    return false;
+                                }
+                                if (typeof item === 'object' && Object.keys(item).length === 0) {
+                                    return false;
+                                }
+                                return true;
+                            });
+                            if (!hasNonEmpty) {
+                                return false;
+                            }
+                        }
+                        
+                        const fieldConfig = templateFields.find(field => {
+                            if (typeof field === 'object' && field !== null) {
+                                const fieldName = field.name || field.field_id || field.id;
+                                if (fieldName) {
+                                    return key.toLowerCase() === fieldName.toLowerCase() ||
+                                           key.toLowerCase().replace(/ü/g, 'ue').replace(/ö/g, 'oe').replace(/ä/g, 'ae') === fieldName.toLowerCase() ||
+                                           key.toLowerCase().replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ä/g, 'a') === fieldName.toLowerCase();
+                                }
+                            }
+                            return false;
+                        });
+                        
+                        if (fieldConfig && fieldConfig.default !== undefined) {
+                            const defaultValue = fieldConfig.default;
+                            if (value === defaultValue || (typeof value === 'string' && value.trim() === String(defaultValue).trim())) {
+                                return false;
+                            }
+                        }
+                        
+                        return true;
+                    });
                     
                     if (dynamicFields.length > 0) {
                         html += '<div class="bewerberboerse-modal-section">';

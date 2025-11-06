@@ -22,6 +22,7 @@ require_once BEWERBERBOERSE_PLUGIN_DIR . 'includes/class-admin.php';
 require_once BEWERBERBOERSE_PLUGIN_DIR . 'includes/class-shortcode.php';
 require_once BEWERBERBOERSE_PLUGIN_DIR . 'includes/class-assets.php';
 require_once BEWERBERBOERSE_PLUGIN_DIR . 'includes/class-api-handler.php';
+require_once BEWERBERBOERSE_PLUGIN_DIR . 'includes/class-updater.php';
 
 register_activation_hook(__FILE__, 'bewerberboerse_activate');
 function bewerberboerse_activate() {
@@ -45,4 +46,5 @@ function bewerberboerse_init() {
     new bewerberboerse_Admin();
     new bewerberboerse_Shortcode();
     new bewerberboerse_API_Handler();
+    new bewerberboerse_Updater();
 }

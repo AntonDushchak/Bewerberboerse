@@ -100,13 +100,133 @@ class bewerberboerse_API_Handler {
         return false;
     }
     
+    private function get_active_template() {
+        global $wpdb;
+        $templates_table = $wpdb->prefix . 'bewerberboerse_templates';
+        $template = $wpdb->get_row(
+            "SELECT * FROM $templates_table WHERE is_active = 1 ORDER BY updated_at DESC LIMIT 1"
+        );
+        
+        if ($template && $template->fields) {
+            $template->fields = json_decode($template->fields, true);
+        }
+        
+        return $template;
+    }
+    
+    private function migrate_application_data($filled_data, $template = null) {
+        if (!$template) {
+            $template = $this->get_active_template();
+        }
+        
+        if (!$template || !is_array($template->fields)) {
+            return $this->filter_empty_values($filled_data);
+        }
+        
+        $migrated_data = array();
+        $template_field_names = array();
+        
+        foreach ($template->fields as $field) {
+            if (is_array($field)) {
+                $field_name = isset($field['name']) ? $field['name'] : 
+                             (isset($field['field_id']) ? $field['field_id'] : 
+                             (isset($field['id']) ? $field['id'] : null));
+                if ($field_name) {
+                    $template_field_names[] = $field_name;
+                }
+            } elseif (is_string($field)) {
+                $template_field_names[] = $field;
+            }
+        }
+        
+        foreach ($template_field_names as $field_name) {
+            if (isset($filled_data[$field_name])) {
+                $value = $filled_data[$field_name];
+                
+                if ($this->is_empty_or_default($value, $field_name, $template->fields)) {
+                    continue;
+                }
+                
+                $migrated_data[$field_name] = $value;
+            }
+        }
+        
+        return $migrated_data;
+    }
+    
+    private function is_empty_or_default($value, $field_name, $template_fields) {
+        if ($value === null || $value === '' || $value === false) {
+            return true;
+        }
+        
+        if (is_array($value)) {
+            if (empty($value)) {
+                return true;
+            }
+            $has_non_empty = false;
+            foreach ($value as $item) {
+                if ($item !== null && $item !== '' && $item !== false) {
+                    if (is_array($item)) {
+                        if (!empty($item)) {
+                            $has_non_empty = true;
+                            break;
+                        }
+                    } else {
+                        $has_non_empty = true;
+                        break;
+                    }
+                }
+            }
+            return !$has_non_empty;
+        }
+        
+        $field_config = null;
+        foreach ($template_fields as $field) {
+            if (is_array($field)) {
+                $field_name_check = isset($field['name']) ? $field['name'] : 
+                                  (isset($field['field_id']) ? $field['field_id'] : 
+                                  (isset($field['id']) ? $field['id'] : null));
+                if ($field_name_check === $field_name) {
+                    $field_config = $field;
+                    break;
+                }
+            }
+        }
+        
+        if ($field_config && isset($field_config['default'])) {
+            $default_value = $field_config['default'];
+            if ($value === $default_value || (is_string($value) && trim($value) === trim($default_value))) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    private function filter_empty_values($data) {
+        $filtered = array();
+        foreach ($data as $key => $value) {
+            if ($value === null || $value === '' || $value === false) {
+                continue;
+            }
+            if (is_array($value) && empty($value)) {
+                continue;
+            }
+            $filtered[$key] = $value;
+        }
+        return $filtered;
+    }
+    
     public function get_applications($request) {
         $applications = bewerberboerse_Database::get_applications();
+        $active_template = $this->get_active_template();
         
         $formatted_applications = array();
         foreach ($applications as $app) {
             $filled_data = json_decode($app->filled_data, true);
             if ($filled_data) {
+                $migrated_data = $this->migrate_application_data($filled_data, $active_template);
+                
                 $formatted_applications[] = array_merge(
                     array(
                         'id' => $app->id,
@@ -115,7 +235,7 @@ class bewerberboerse_API_Handler {
                         'createdAt' => $app->created_at,
                         'updatedAt' => $app->updated_at
                     ),
-                    $filled_data
+                    $migrated_data
                 );
             }
         }
@@ -137,6 +257,10 @@ class bewerberboerse_API_Handler {
         }
         
         $filled_data = json_decode($application->filled_data, true);
+        $active_template = $this->get_active_template();
+        
+        $migrated_data = $this->migrate_application_data($filled_data ? $filled_data : array(), $active_template);
+        
         $response_data = array_merge(
             array(
                 'id' => $application->id,
@@ -145,7 +269,7 @@ class bewerberboerse_API_Handler {
                 'createdAt' => $application->created_at,
                 'updatedAt' => $application->updated_at
             ),
-            $filled_data ? $filled_data : array()
+            $migrated_data
         );
         
         return rest_ensure_response($response_data);
